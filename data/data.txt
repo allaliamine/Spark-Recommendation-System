@@ -1,0 +1,3 @@
+to use the same data as in the project please download it from this link : 
+
+https://huggingface.co/datasets/openfoodfacts/product-database/resolve/main/food.parquet?download=true
