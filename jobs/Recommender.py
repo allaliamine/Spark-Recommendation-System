@@ -12,13 +12,24 @@ class Recommender:
         
 
     def getUserInputAsVector(self, user_word, loaded_model):
-        try:
-            user_vec_row = loaded_model.getVectors().filter(f"word = '{user_word}'").collect()[0]           
-            user_vec_np = np.array(user_vec_row['vector'])
-        except IndexError:
-            raise ValueError(f"The word '{user_word}' was not found in the vocabulary.")
-        
-        return user_vec_np
+        words = user_word.strip().split()
+        found_vectors = []
+
+        for word in words:
+            try:
+                row = loaded_model.getVectors().filter(f"word = '{word}'").collect()
+                if row:
+                    vec_np = np.array(row[0]['vector'])
+                    found_vectors.append(vec_np)
+            except Exception as e:
+                # Log or continue silently
+                continue
+
+        if not found_vectors:
+            raise ValueError(f"None of the words in '{user_word}' was found in the vocabulary.")
+
+        # Return the mean vector
+        return np.mean(found_vectors, axis=0)
     
     def getCosineSimilarity(self, df, user_vec_np):
 
