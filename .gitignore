@@ -7,6 +7,7 @@ __pycache__/
 data/food.parquet 
 data/*.csv*
 data/final*
+nltk_data/*
 
 # macOS
 .DS_Store
