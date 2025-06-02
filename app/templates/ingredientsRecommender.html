@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Recommender</title>
+    <link rel="stylesheet" href="../static/style/index_style.css">
+    <link rel="stylesheet" href="../static/style/ingredientsRecommed_style.css">
+
+       
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-title">Your Recommender</div>
+            <div class="nav-links">
+                <a href="{{ url_for('ingredientRecommender') }}" class="nav-link" id="ingredientsLink">Recommend using ingredients</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <h2 class="project-title" style="font-size: 3em;">Spark Recommendation System</h2>
+        <p class="subtitle">Discover the best products for you!</p>
+        <form class="input-container" method="post" action="/recommend">
+            <input type="text" class="ingredient-input" name="user_word" placeholder="Enter an ingredients separated by commas... ex: tomato, cheese, basil">
+            <button class="recommendation-button" >Get Recommendations</button>
+        </form>
+        <div class="decoration">
+            <div class="decoration-item left"></div>
+            <div class="decoration-item center"></div>
+            <div class="decoration-item right"></div>
+        </div>
+        
+    </main>
+    <div class="recommendations-container">
+            {% if recommendations %}
+            <h3 class="recommendation-title">Recommended Products</h3>
+            <div class="product-cards">
+                {% for product in recommendations %}
+                <div class="product-card">
+                    <div class="product-image">
+                    <img src="{{ product.image_url }}" alt="{{ product.product_name }}" width="100" height="100">
+                    </div>
+                    <div class="product-info">
+                    <h4 class="product-name">{{ product.product_name }}</h4>
+                    <p class="product-brand">{{ product.brands }}</p>
+                    <div class="product-scores">
+                        <span class="nutriscore score-badge grade-{{ product.nutriscore_grade }}">Nutri-Score: {{ product.nutriscore_grade }}</span>
+                        <span class="nova-group score-badge nova-{{ product.nova_group }}">Nova: {{ product.nova_group }}</span>
+                    </div>
+                    <p class="similarity-score">Similarity: {{ "%.2f"|format(product.similarity * 100) }}%</p>
+                    <a href="{{ product.url }}" class="product-link" target="_blank">View Details</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        
+            {% else %}
+            <p class="no-recommendations">Enter ingredients to get recommendations</p>
+            {% endif %}
+        </div>
+</body>
+</html>
