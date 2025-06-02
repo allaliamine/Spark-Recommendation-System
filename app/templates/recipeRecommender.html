@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Recommender</title>
+    <link rel="stylesheet" href="../static/style/index_style.css">
+    <link rel="stylesheet" href="../static/style/ingredientsRecommed_style.css">
+
+       
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-title">Your Recommender</div>
+            <div class="nav-links">
+                <a href="{{ url_for('ingredientRecommender') }}" class="nav-link" id="ingredientsLink">Recommend using ingredients</a>
+                <a href="{{ url_for('recipeRecommender') }}" class="nav-link" id="recipeLink">Recommend ingredients from a recipe</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <h2 class="project-title" style="font-size: 3em;">Spark Recommendation System</h2>
+
+        {% if ingredients %}
+            
+            <div class="ingredients-list">
+                <h3>Found Ingredients:</h3>
+                <ul>
+                    {% for ingredient in ingredients %}
+                        <li>
+                            {{ ingredient }}
+                            <form method="post" action="/recommend" style="display: inline;">
+                                <input type="hidden" name="user_word" value="{{ ingredient }}">
+                                <button type="submit" class="suggest-button">Suggest Products</button>
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% else %}
+            <p class="subtitle">Please enter a Recipe to get the best products for you!</p>
+            <form class="input-container" method="post" action="/getIngredients">
+                <input type="textarea" class="ingredient-input" name="user_recipe" placeholder="Enter a Recipe" required>
+                <button class="recommendation-button">Get Ingredients</button>
+
+            </form>
+            <div class="decoration">
+                <div class="decoration-item left"></div>
+                <div class="decoration-item center"></div>
+                <div class="decoration-item right"></div>
+            </div>
+        {% endif %}
+    </main>
+    
+</body>
+</html>

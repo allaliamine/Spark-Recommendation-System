@@ -15,15 +15,16 @@
             <div class="nav-title">Your Recommender</div>
             <div class="nav-links">
                 <a href="{{ url_for('ingredientRecommender') }}" class="nav-link" id="ingredientsLink">Recommend using ingredients</a>
+                <a href="{{ url_for('recipeRecommender') }}" class="nav-link" id="recipeLink">Recommend ingredients from a recipe</a>
             </div>
         </div>
     </nav>
 
     <main class="main-content">
         <h2 class="project-title" style="font-size: 3em;">Spark Recommendation System</h2>
-        <p class="subtitle">Discover the best products for you!</p>
+        <p class="subtitle">Please enter an ingredient to get the best products for you!</p>
         <form class="input-container" method="post" action="/recommend">
-            <input type="text" class="ingredient-input" name="user_word" placeholder="Enter an ingredients separated by commas... ex: tomato, cheese, basil">
+            <input type="text" class="ingredient-input" name="user_word" placeholder="Enter an ingredients... ex: tomato, cheese, basil" required>
             <button class="recommendation-button" >Get Recommendations</button>
         </form>
         <div class="decoration">
@@ -33,9 +34,23 @@
         </div>
         
     </main>
+   
     <div class="recommendations-container">
+         {% if error_message %}
+            <div class="error-message">
+                <div class="error-icon">⚠️</div>
+                <h3 class="error-title">Oops! Something went wrong</h3>
+                <p class="error-text">{{ error_message }}</p>
+                <div class="error-decoration">
+                    <div class="error-dot"></div>
+                    <div class="error-dot"></div>
+                    <div class="error-dot"></div>
+                </div>
+            </div>
+
+        {% else %}
             {% if recommendations %}
-            <h3 class="recommendation-title">Recommended Products</h3>
+            <h3 class="recommendation-title">Recommended Products for {{user_word}} :</h3>
             <div class="product-cards">
                 {% for product in recommendations %}
                 <div class="product-card">
@@ -55,10 +70,8 @@
                 </div>
                 {% endfor %}
             </div>
-        
-            {% else %}
-            <p class="no-recommendations">Enter ingredients to get recommendations</p>
             {% endif %}
+        {% endif %}
         </div>
 </body>
 </html>
