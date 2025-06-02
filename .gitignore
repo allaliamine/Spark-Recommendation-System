@@ -8,6 +8,7 @@ data/food.parquet
 data/*.csv*
 data/final*
 nltk_data/*
+.env
 
 # macOS
 .DS_Store
