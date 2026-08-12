@@ -4,7 +4,7 @@ from pyspark.ml.feature import Word2VecModel
 from pyspark.sql import SparkSession
 import nltk
 
-nltk.data.path.append('/Users/mac/Desktop/Spark-Recommendation-System/nltk_data')
+nltk.data.path.append('/Users/amine/Desktop/Spark-Recommendation-System/nltk_data')
 
 
 

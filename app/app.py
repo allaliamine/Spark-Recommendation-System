@@ -19,10 +19,10 @@ def init():
         .config("spark.driver.memory", "4g") \
         .getOrCreate()
 
-    path_to_model = "/Users/mac/Desktop/Spark-Recommendation-System/models/custom_word2vec_model"
+    path_to_model = "/Users/amine/Desktop/Spark-Recommendation-System/models/custom_word2vec_model"
     recommender = Recommender(spark)
 
-    dataframe = spark.read.parquet("/Users/mac/Desktop/Spark-Recommendation-System/data/final_data_with_embeddings.parquet")
+    dataframe = spark.read.parquet("/Users/amine/Desktop/Spark-Recommendation-System/data/final_data_with_embeddings.parquet")
     
 def extract_ingredients(recipe_text):
     
